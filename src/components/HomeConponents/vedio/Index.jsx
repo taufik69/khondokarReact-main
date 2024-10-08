@@ -1,12 +1,10 @@
-"use client";
 import React, { useState, useEffect } from "react";
-// import { useEffect, useState } from "react/cjs/react.production.min";
 import Slider from "react-slick";
-import Heading from "../commonCoponents/Heading.jsx";
+import Heading from "../../commonCoponents/Heading.jsx";
 import { IoMdArrowBack } from "react-icons/io";
 import { IoArrowForwardSharp } from "react-icons/io5";
 import VedioContent from "./VedioContent.jsx";
-import { axiosInstance } from "../axios/axios.instance.js";
+import { axiosInstance } from "../../axios/axios.instance.js";
 
 const Vedio = () => {
   const [allVedio, setallVedio] = useState([]);

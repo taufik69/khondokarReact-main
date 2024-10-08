@@ -1,14 +1,11 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import { IoMdArrowBack } from "react-icons/io";
 import { IoArrowForwardSharp } from "react-icons/io5";
 import BannerContent from "./BannerContent.jsx";
-import img1 from "../../../public/assets/banner/one.jpg";
 
-import { axiosInstance } from "../axios/axios.instance.js";
+import { axiosInstance } from "../../axios/axios.instance.js";
 
 const Banner = () => {
   // Data Fetching from server
@@ -152,7 +149,7 @@ const Banner = () => {
     <div className="slider-container">
       <Slider {...settings}>
         {allBaner?.map((item) => (
-          <BannerContent bannerContent={item} staticImage={img1} />
+          <BannerContent bannerContent={item} />
         ))}
       </Slider>
     </div>

@@ -1,20 +1,20 @@
-
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useNavigate } from "react-router-dom"; // React Router navigation
+import { Link } from "react-router-dom"; // React Router Link
 import { toast, ToastContainer, Bounce } from "react-toastify";
-import { axiosInstance } from "../components/axios/axios.instance";
+import axios from "axios"; // Axios for HTTP requests
 import { FaRegEye, FaEyeSlash } from "react-icons/fa";
 import { FallingLines } from "react-loader-spinner";
+
 const SignUP = () => {
-  const router = useRouter();
-  const [eye, seteye] = useState(false);
-  const [loading, setloading] = useState(false);
-  const [signUpinfo, setsignUpinfo] = useState({
+  const navigate = useNavigate();
+  const [eye, setEye] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [signUpInfo, setSignUpInfo] = useState({
     firstName: "",
     email: "",
     mobile: "",
-    adress: "",
+    address: "",
     password: "",
   });
 
@@ -24,10 +24,10 @@ const SignUP = () => {
   const [addressErr, setAddressErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
 
-  const onsinguphandaler = (event) => {
+  const onSignupHandler = (event) => {
     const { id, value } = event.target;
-    setsignUpinfo({
-      ...signUpinfo,
+    setSignUpInfo({
+      ...signUpInfo,
       [id]: value,
     });
   };
@@ -35,27 +35,27 @@ const SignUP = () => {
   // handleRegistration function
   const handleRegistration = async () => {
     try {
-      setloading(true);
+      setLoading(true);
 
-      const { firstName, email, mobile, password } = signUpinfo;
+      const { firstName, email, mobile, password } = signUpInfo;
 
       if (!firstName) {
         setFirstNameErr("FirstName Missing !!");
       } else if (!email) {
-        setEmailErr("email Missing !!");
+        setEmailErr("Email Missing !!");
         setFirstNameErr("");
       } else if (!mobile) {
-        setMobileErr("mobile Missing !!");
+        setMobileErr("Mobile Missing !!");
         setEmailErr("");
         setFirstNameErr("");
       } else if (!password) {
-        setPasswordErr("Password  Missing !!");
+        setPasswordErr("Password Missing !!");
         setMobileErr("");
         setEmailErr("");
         setFirstNameErr("");
       } else {
-        setPasswordErr("Password  Missing !!");
-        const { data } = await axiosInstance.post("/signup", signUpinfo);
+        setPasswordErr("");
+        const { data } = await axios.post("/signup", signUpInfo);
 
         if (data?.success) {
           toast.success(data?.message, {
@@ -70,12 +70,12 @@ const SignUP = () => {
             transition: Bounce,
           });
 
-          router.push("/signin");
+          navigate("/signin"); // Redirect to Sign In page after successful registration
         }
       }
     } catch (error) {
       const { response } = error;
-      toast.error(response?.data?.errors, {
+      toast.error(response?.data?.errors || "Registration failed", {
         position: "top-left",
         autoClose: 5000,
         hideProgressBar: false,
@@ -87,45 +87,46 @@ const SignUP = () => {
         transition: Bounce,
       });
     } finally {
-      setloading(false);
-      setsignUpinfo({
+      setLoading(false);
+      setSignUpInfo({
         firstName: "",
         email: "",
         mobile: "",
-        adress: "",
+        address: "",
         password: "",
       });
     }
   };
+
   return (
     <>
-      <ToastContainer className={"w-fit "} />
-      <div className=" signupZigzag flex h-screen">
-        <div className="lg:w-[60%] w-full overflow-y-scroll md:overflow-y-clip  h-full flex flex-col  justify-center items-center ">
-          <div className="w-1/2">
+      <ToastContainer className="w-fit" />
+      <div className="signupZigzag flex h-screen overflow-y-scroll">
+        <div className="lg:w-[60%] w-full overflow-y-scroll md:overflow-y-scroll lg:overflow-y-auto h-full flex flex-col justify-center items-center">
+          <div className="w-full px-4 md:px-0 md:w-1/2">
             <div className="flex flex-col items-center justify-normal py-10">
               <h1
-                className="text-primary_font_color  text-[50px] mt-10 md:mt-0 md:text-[60px] font-ruda"
+                className="text-primary_font_color text-[50px] mt-10 md:mt-0 md:text-[60px] font-ruda"
                 style={{ fontWeight: "bold" }}
               >
                 Registration
               </h1>
             </div>
-            <form action="#" onSubmit={(e) => e.preventDefault()}>
+            <form onSubmit={(e) => e.preventDefault()}>
               <div className="flex flex-col gap-y-5 text-primary_font_color">
                 <div className="flex flex-col gap-y-2">
                   <label
                     htmlFor="firstName"
                     className="font-sans_serif text-para_font_size"
                   >
-                    FirstName <span className="text-orange_color">*</span>
+                    First Name <span className="text-orange_color">*</span>
                   </label>
                   <input
                     type="text"
                     id="firstName"
-                    value={signUpinfo.firstName}
-                    onChange={onsinguphandaler}
-                    placeholder="Kader Khondokar"
+                    value={signUpInfo.firstName}
+                    onChange={onSignupHandler}
+                    placeholder="John Doe"
                     className="py-2 px-3 rounded-lg text-black"
                   />
                   {firstNameErr && (
@@ -145,8 +146,8 @@ const SignUP = () => {
                   <input
                     type="email"
                     id="email"
-                    value={signUpinfo.email}
-                    onChange={onsinguphandaler}
+                    value={signUpInfo.email}
+                    onChange={onSignupHandler}
                     placeholder="example@gmail.com"
                     className="py-2 px-3 rounded-lg text-black"
                   />
@@ -165,11 +166,11 @@ const SignUP = () => {
                     Mobile <span className="text-orange_color">*</span>
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     id="mobile"
-                    value={signUpinfo.mobile}
+                    value={signUpInfo.mobile}
                     placeholder="01875933259"
-                    onChange={onsinguphandaler}
+                    onChange={onSignupHandler}
                     className="py-2 px-3 rounded-lg text-black"
                   />
                   {mobileErr && (
@@ -181,17 +182,17 @@ const SignUP = () => {
 
                 <div className="flex flex-col gap-y-2">
                   <label
-                    htmlFor="adress"
+                    htmlFor="address"
                     className="font-sans_serif text-para_font_size"
                   >
-                    adress
+                    Address
                   </label>
                   <input
                     type="text"
-                    id="adress"
-                    value={signUpinfo.adress}
-                    placeholder="Faridpur "
-                    onChange={onsinguphandaler}
+                    id="address"
+                    value={signUpInfo.address}
+                    placeholder="City, State"
+                    onChange={onSignupHandler}
                     className="py-2 px-3 rounded-lg text-black"
                   />
                   {addressErr && (
@@ -211,14 +212,14 @@ const SignUP = () => {
                   <input
                     type={eye ? "text" : "password"}
                     id="password"
-                    value={signUpinfo.password}
-                    onChange={onsinguphandaler}
+                    value={signUpInfo.password}
+                    onChange={onSignupHandler}
                     placeholder="********"
-                    className="py-2 px-3 rounded-lg text-black "
+                    className="py-2 px-3 rounded-lg text-black"
                   />
                   <span
-                    className="absolute bottom-[13%] right-[4%] text-black text-3xl"
-                    onClick={() => seteye(!eye)}
+                    className="absolute bottom-[13%] right-[4%] text-black text-3xl cursor-pointer"
+                    onClick={() => setEye(!eye)}
                   >
                     {eye ? <FaEyeSlash /> : <FaRegEye />}
                   </span>
@@ -229,7 +230,7 @@ const SignUP = () => {
                   )}
                 </div>
                 {loading ? (
-                  <span className=" flex items-center justify-center ">
+                  <span className="flex items-center justify-center">
                     <FallingLines
                       color="#fff"
                       height="50"
@@ -250,12 +251,12 @@ const SignUP = () => {
                 <p className="text-primary_font_color font-sans_serif">
                   Already have an Account?{" "}
                   <Link
-                    href={"/signin"}
+                    to="/signin"
                     className="text-orange_color ml-1 hover:underline"
                     style={{ fontWeight: "500" }}
                   >
                     Log In
-                  </Link>{" "}
+                  </Link>
                 </p>
               </div>
             </form>

@@ -1,13 +1,13 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import Heading from "../../components/commonCoponents/Heading.jsx";
+import Heading from "../../commonCoponents/Heading.jsx";
 import { IoMdArrowBack } from "react-icons/io";
 import { IoArrowForwardSharp } from "react-icons/io5";
 import ProductContent from "./ProductContent.jsx";
-import { useAppDispatch, useAppSelector } from "../../lib/hooks.js";
-import { addtoCart } from "../../lib/features/addtoCart/addtoCartSlilce.js";
-import { axiosInstance } from "../axios/axios.instance.js";
+import { useDispatch, useSelector } from "react-redux";
+import { addtoCart } from "../../../lib/features/addToCart/addtoCart.js";
+import { axiosInstance } from "../../axios/axios.instance.js";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   // Data Fetching from server
@@ -24,8 +24,9 @@ const Products = () => {
     ProductFetcher();
   }, []);
 
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const [allProduct, setallProduct] = useState([]);
+
   function SamplePrevArrow2(props) {
     const { onClick } = props;
     return (
@@ -36,7 +37,6 @@ const Products = () => {
           justifyContent: "center",
           alignItems: "center",
           position: "absolute",
-          // left: "-80px",
         }}
         onClick={onClick}
       >
@@ -58,7 +58,6 @@ const Products = () => {
           justifyContent: "center",
           alignItems: "center",
           position: "absolute",
-          // right: "-50px",
         }}
         onClick={onClick}
       >
@@ -119,31 +118,34 @@ const Products = () => {
   };
 
   return (
-    <div className="productpart">
-      <div className="py-14">
-        <Heading
-          className={
-            "customShadow flex flex-col items-center justify-center gap-y-4"
-          }
-          title={""}
-          description={""}
-        />
-      </div>
-      <div className="mx-auto max-w-screen-xl">
-        <div className="slider-container">
-          <Slider {...settings}>
-            {allProduct?.data?.map((productItem) => (
-              <div className="px-4 md:px-3">
-                <ProductContent
-                  productInfo={productItem}
-                  onhandleAddToCart={handleAddToCart}
-                />
-              </div>
-            ))}
-          </Slider>
+    <>
+      <div className="productpart">
+        <div className="py-14">
+          <Heading
+            className={
+              "customShadow flex flex-col items-center justify-center gap-y-4"
+            }
+            title={""}
+            description={""}
+          />
+        </div>
+        <div className="mx-auto max-w-screen-xl">
+          <div className="slider-container">
+            <Slider {...settings}>
+              {allProduct?.data?.map((productItem) => (
+                <div className="px-4 md:px-3" key={productItem._id}>
+                  {/* Wrap ProductContent with Link */}
+                  <ProductContent
+                    productInfo={productItem}
+                    onhandleAddToCart={handleAddToCart}
+                  />
+                </div>
+              ))}
+            </Slider>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

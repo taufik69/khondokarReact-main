@@ -1,57 +1,51 @@
-
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useNavigate, Link } from "react-router-dom";
 import { toast, ToastContainer, Bounce } from "react-toastify";
 import { axiosInstance } from "../components/axios/axios.instance";
 import { FaRegEye, FaEyeSlash } from "react-icons/fa";
 import { FallingLines } from "react-loader-spinner";
 import { FaFacebookF, FaYoutube, FaInstagram, FaTwitter } from "react-icons/fa";
+
 const SignIn = () => {
-  const router = useRouter();
-  const [eye, seteye] = useState(false);
-  const [loading, setloading] = useState(false);
-  const [signIninfo, setsignIninfo] = useState({
+  const navigate = useNavigate(); // Replacing useRouter with useNavigate
+  const [eye, setEye] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [signInInfo, setSignInInfo] = useState({
     email: "",
     password: "",
   });
 
-  let [emailerror, setEmailerror] = useState("");
-  let [passworderror, setPassworderror] = useState("");
+  let [emailError, setEmailError] = useState("");
+  let [passwordError, setPasswordError] = useState("");
 
-  const onsinguphandaler = (event) => {
+  const onInputHandler = (event) => {
     const { id, value } = event.target;
-    setsignIninfo({
-      ...signIninfo,
+    setSignInInfo({
+      ...signInInfo,
       [id]: value,
     });
   };
 
-  
-  const handlelogin = async () => {
-    // Clear previous errors
-    setEmailerror("");
-    setPassworderror("");
+  const handleLogin = async () => {
+    setEmailError("");
+    setPasswordError("");
 
-    const { email, password } = signIninfo;
+    const { email, password } = signInInfo;
 
-    // Validate email and password fields
     if (!email) {
-      setEmailerror("Email is missing!");
+      setEmailError("Email is missing!");
     }
     if (!password) {
-      setPassworderror("Password is missing!");
+      setPasswordError("Password is missing!");
     }
 
-    // If either email or password is missing, stop execution here
     if (!email || !password) {
-      setloading(false);
+      setLoading(false);
       return;
     }
 
     try {
-      setloading(true);
-
+      setLoading(true);
       const { data } = await axiosInstance.post("/signin", {
         emailOrMobile: email,
         password: password,
@@ -70,7 +64,7 @@ const SignIn = () => {
           transition: Bounce,
         });
 
-        router.push("/");
+        navigate("/"); // Redirect using useNavigate
       }
     } catch (error) {
       const { response } = error;
@@ -86,18 +80,16 @@ const SignIn = () => {
         transition: Bounce,
       });
     } finally {
-      setloading(false);
-      setsignIninfo({ email: "", password: "" });
+      setLoading(false);
+      setSignInInfo({ email: "", password: "" });
     }
   };
-
-
 
   return (
     <>
       <ToastContainer className={"w-fit "} />
-      <div className=" signinZigzag flex h-screen">
-        <div className="lg:w-[60%] w-full overflow-y-scroll md:overflow-y-clip  h-full flex flex-col  justify-center items-center ">
+      <div className="signinZigzag flex h-screen">
+        <div className="lg:w-[60%] w-full overflow-y-scroll md:overflow-y-clip  h-full flex flex-col justify-center items-center">
           <div className="w-1/2">
             <div className="flex flex-col items-center justify-normal py-10">
               <h1
@@ -119,14 +111,14 @@ const SignIn = () => {
                   <input
                     type="email"
                     id="email"
-                    value={signIninfo.email}
-                    onChange={onsinguphandaler}
+                    value={signInInfo.email}
+                    onChange={onInputHandler}
                     placeholder="example@gmail.com"
                     className="py-2 px-3 rounded-lg text-black"
                   />
-                  {emailerror && (
+                  {emailError && (
                     <p className="text-red-600 capitalize font-ruda">
-                      {emailerror}
+                      {emailError}
                     </p>
                   )}
                 </div>
@@ -141,25 +133,26 @@ const SignIn = () => {
                   <input
                     type={eye ? "text" : "password"}
                     id="password"
-                    value={signIninfo.password}
-                    onChange={onsinguphandaler}
+                    value={signInInfo.password}
+                    onChange={onInputHandler}
                     placeholder="********"
                     className="py-2 px-3 rounded-lg text-black "
                   />
                   <span
                     className="absolute bottom-[13%] right-[4%] text-black text-3xl"
-                    onClick={() => seteye(!eye)}
+                    onClick={() => setEye(!eye)}
                   >
                     {eye ? <FaEyeSlash /> : <FaRegEye />}
                   </span>
-                  {passworderror && (
+                  {passwordError && (
                     <p className="text-red-600 capitalize font-ruda">
-                      {passworderror}
+                      {passwordError}
                     </p>
                   )}
                 </div>
+
                 {loading ? (
-                  <span className=" flex items-center justify-center ">
+                  <span className="flex items-center justify-center">
                     <FallingLines
                       color="#fff"
                       height="50"
@@ -169,9 +162,9 @@ const SignIn = () => {
                   </span>
                 ) : (
                   <button
-                    className="w-full mt-10 bg-orange_color  rounded-full py-2 text-primary_font_color font-sans_serif z-10"
+                    className="w-full mt-10 bg-orange_color rounded-full py-2 text-primary_font_color font-sans_serif z-10"
                     style={{ fontWeight: "500" }}
-                    onClick={handlelogin}
+                    onClick={handleLogin}
                   >
                     Sign In
                   </button>
@@ -180,7 +173,7 @@ const SignIn = () => {
                   <div>
                     Don’t have an account?{" "}
                     <Link
-                      href={"/signup"}
+                      to="/signup"
                       className="text-orange_color ml-1 hover:underline"
                       style={{ fontWeight: "500" }}
                     >
@@ -188,10 +181,11 @@ const SignIn = () => {
                     </Link>{" "}
                   </div>
                   <span className="text-white underline cursor-pointer hover:text-orange_color">
-                    ForgotPassword
+                    Forgot Password
                   </span>
                 </p>
               </div>
+
               <div className="mt-8 flex justify-center lg:justify-start space-x-4 text-primary_font_color">
                 <FaFacebookF className="w-12 h-12 rounded-full p-2 sm:bg-blue-700 sm:p-3 animate-bounce duration-75 cursor-pointer" />
                 <FaYoutube className="w-12 h-12 rounded-full sm:bg-red-700 sm:p-3 animate-bounce duration-1000 cursor-pointer" />

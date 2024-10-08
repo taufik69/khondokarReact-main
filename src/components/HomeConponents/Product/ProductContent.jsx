@@ -1,38 +1,32 @@
-import Image from "next/image";
 import React from "react";
-
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 const ProductContent = ({ onhandleAddToCart, productInfo }) => {
   return (
     <div className="w-full rounded-lg border border-primary_font_color bg-gray-800 opacity-90">
       <div className="h-[320px] w-full rounded-3xl">
-        <Image
+        <img
           src={productInfo?.image}
-          width={1000}
-          height={800}
-          loading="lazy"
-          quality={100}
           alt="Picture of the product"
           className="h-full w-full rounded-3xl object-cover p-5"
         />
       </div>
 
       <div className="px-5 pb-5">
-        <Link href="#">
-          <h5
-            className="text-para_font_size font-semibold tracking-tight  font-ruda text-primary_font_color "
-            style={{ fontWeight: "500" }}
-          >
-            {productInfo?.productTitle
-              ? productInfo?.productTitle
-              : "Title missing"}
-          </h5>
-        </Link>
+        <h5
+          className="text-para_font_size font-semibold tracking-tight font-ruda text-primary_font_color"
+          style={{ fontWeight: "500" }}
+        >
+          {productInfo?.productTitle
+            ? productInfo?.productTitle
+            : "Title missing"}
+        </h5>
+
         <div className="mb-5 mt-2.5 flex items-center">
           <div className="flex items-center space-x-1 rtl:space-x-reverse">
             {[...new Array(productInfo?.productRating)].map((_, index) => (
               <svg
+                key={index}
                 className="h-4 w-4 text-orange-500"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +37,7 @@ const ProductContent = ({ onhandleAddToCart, productInfo }) => {
               </svg>
             ))}
           </div>
-          <span className="text-xs font-semibold ms-3 rounded bg-primary_font_color px-2.5 py-0.5 text-black font-ruda ">
+          <span className="text-xs font-semibold ms-3 rounded bg-primary_font_color px-2.5 py-0.5 text-black font-ruda">
             {productInfo?.productRating
               ? productInfo?.productRating
               : "No Review yet"}
@@ -51,14 +45,14 @@ const ProductContent = ({ onhandleAddToCart, productInfo }) => {
         </div>
         <div className="flex items-center justify-between">
           <span
-            className="text-primary_font_color font-ruda text-para_font_size "
+            className="text-primary_font_color font-ruda text-para_font_size"
             style={{ fontWeight: "500" }}
           >
             <span className="text-[25px]">&#2547;</span>{" "}
             {productInfo?.productPrice}
           </span>
           <button
-            className=" text-para_font_size font-sans_serif rounded-lg bg-orange_color px-5 py-2.5 text-center text-primary_font_color transition-all hover:bg-orange-800 "
+            className="text-para_font_size font-sans_serif rounded-lg bg-orange_color px-5 py-2.5 text-center text-primary_font_color transition-all hover:bg-orange-800"
             style={{ fontWeight: "400" }}
             onClick={() => onhandleAddToCart(productInfo)}
           >

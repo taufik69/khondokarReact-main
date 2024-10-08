@@ -1,9 +1,7 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import { IoMdArrowBack } from "react-icons/io";
 import { IoArrowForwardSharp } from "react-icons/io5";
-
 import AwardContent from "../Award/AwardContent";
 import { axiosInstance } from "../../axios/axios.instance";
 const WhatWeDo = () => {

@@ -50,7 +50,7 @@ export const addToCartSlice = createSlice({
     },
     RemoveItemCart: (state, action) => {
       const removeitem = state.CartTtem.filter(
-        (item) => item._id !== action.payload._id,
+        (item) => item._id !== action.payload._id
       );
       state.CartTtem = removeitem;
       localStorage.setItem("cartItem", JSON.stringify(state.CartTtem));
@@ -68,7 +68,7 @@ export const addToCartSlice = createSlice({
     },
     ProductIncrement: (state, action) => {
       const findIndex = state.CartTtem.findIndex(
-        (item) => item._id === action.payload._id,
+        (item) => item._id === action.payload._id
       );
       if (findIndex >= 0) {
         state.CartTtem[findIndex].cartQuantity += 1;
@@ -88,7 +88,7 @@ export const addToCartSlice = createSlice({
     },
     productDecrement: (state, action) => {
       const findIndex = state.CartTtem.findIndex(
-        (item) => item._id === action.payload._id,
+        (item) => item._id === action.payload._id
       );
       if (state.CartTtem[findIndex].cartQuantity > 1) {
         state.CartTtem[findIndex].cartQuantity -= 1;
@@ -119,7 +119,7 @@ export const addToCartSlice = createSlice({
         {
           totalAmount: 0,
           totalItem: 0,
-        },
+        }
       );
 
       state.totoalCartItem = totalCart.totalItem;

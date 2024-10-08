@@ -1,13 +1,13 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { IoMdArrowBack } from "react-icons/io";
 import { IoArrowForwardSharp } from "react-icons/io5";
-
 import AwardContent from "./AwardContent";
-import { axiosInstance } from "../axios/axios.instance";
+import { axiosInstance } from "../../axios/axios.instance";
+
 const Award = () => {
   const [award, setaward] = useState([]);
+
   useEffect(() => {
     const Fetcher = async () => {
       try {
@@ -139,7 +139,7 @@ const Award = () => {
             <div className="slider-container">
               <Slider {...settings}>
                 {award?.map((item) => (
-                  <div className="px-3">
+                  <div className="px-3 ">
                     <AwardContent awardInfo={item} title={true} />
                   </div>
                 ))}

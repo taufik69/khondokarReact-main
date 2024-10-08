@@ -1,11 +1,10 @@
-import Image from "next/image";
 import React from "react";
-import img from "../../../public/assets/product/product.jpg";
+
 const AwardContent = ({ title, awardInfo = {} }) => {
   return (
-    <div className="relative" key={awardInfo?._id}>
-      <Image
-        src={img}
+    <div className="relative h-[40vh]" key={awardInfo?._id}>
+      <img
+        src={awardInfo?.image}
         width={500}
         height={400}
         loading="lazy"
@@ -14,20 +13,21 @@ const AwardContent = ({ title, awardInfo = {} }) => {
       />
       <div className="iamgeOverlay ">
         {title ? (
-          <Image
-            src={awardInfo?.image || img}
-            width={500}
-            height={400}
+          <img
+            src={awardInfo?.image}
             alt="Picture of the Award"
             loading="lazy"
             className="h-full w-full rounded-3xl object-cover p-2 "
           />
         ) : (
-          <div className="p-2" key={2}>
+          <div className="p-2 h-[40vh]" key={2}>
             <iframe
               width="100%"
-              height="412"
-              style={{ borderRadius: "20px", border: "3px solid white" }}
+              height={"100%"}
+              style={{
+                borderRadius: "20px",
+                border: "3px solid white",
+              }}
               src={awardInfo?.whatwedoVedioLink}
               title="Kandokar.com"
               frameborder="2"

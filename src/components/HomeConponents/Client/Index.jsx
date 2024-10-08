@@ -1,11 +1,9 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import Heading from "../../commonCoponents/Heading.jsx";
 import { IoMdArrowBack } from "react-icons/io";
 import { IoArrowForwardSharp } from "react-icons/io5";
-import client from "../../../public/assets/client/taufik.jpg";
-import Image from "next/image.js";
+
 import { axiosInstance } from "../../axios/axios.instance.js";
 
 const Client = () => {
@@ -125,7 +123,7 @@ const Client = () => {
     prevArrow: <SamplePrevArrow2 />,
   };
   return (
-    <div className="custombg">
+    <div className=" bg-header_footer_background_color">
       <div className="py-14 ">
         <Heading
           className={" flex flex-col items-center justify-center gap-y-4"}
@@ -163,7 +161,7 @@ const Client = () => {
                         {/* <!-- Quote after the text --> */}
                       </div>
                       <div class="flex items-center mt-6 space-x-4">
-                        <Image
+                        <img
                           width={100}
                           height={100}
                           src={client ? client.image : client}
