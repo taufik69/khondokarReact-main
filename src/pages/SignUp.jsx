@@ -112,7 +112,7 @@ const SignUP = () => {
                 Registration
               </h1>
             </div>
-            <form onSubmit={(e) => e.preventDefault()}>
+            <form action="#" onSubmit={(e) => e.preventDefault()}>
               <div className="flex flex-col gap-y-5 text-primary_font_color">
                 <div className="flex flex-col gap-y-2">
                   <label
