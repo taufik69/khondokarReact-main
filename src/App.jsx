@@ -12,23 +12,21 @@ import CartPage from "./pages/Cart";
 import SignUP from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Error from "./components/commonCoponents/Error";
+import ProductDetails from "./pages/ProductDetails";
 import RootLayout from "./components/commonCoponents/RootLayout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route>
-        {/* <Route element={<IsLoginUser />}> */}
-        <Route element={<RootLayout />} />
-        <Route index path="/" element={<Home />} />,
+      <Route element={<RootLayout />}>
+        <Route />
+        <Route index element={<Home />} />,
         <Route path="/cart" element={<CartPage />} />,
+        <Route path="/productdetails/:id" element={<ProductDetails />} />,
         <Route path="/*" element={<Error />}></Route>
-        {/* </Route> */}
-        {/* <Route element={<IsNotLoginUser />}> */}
-        <Route path="/signup" element={<SignUP />}></Route>,
-        <Route path="/signin" element={<SignIn />}></Route>
-        {/* </Route> */}
       </Route>
+      <Route path="/signup" element={<SignUP />}></Route>,
+      <Route path="/signin" element={<SignIn />}></Route>
     </Route>
   )
 );

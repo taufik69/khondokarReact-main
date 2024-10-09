@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
 const ProductContent = ({ onhandleAddToCart, productInfo }) => {
@@ -11,16 +12,43 @@ const ProductContent = ({ onhandleAddToCart, productInfo }) => {
           className="h-full w-full rounded-3xl object-cover p-5"
         />
       </div>
-
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Home</title>
+        <meta
+          name="description"
+          content="Top-quality machinery and workshop equipment. Explore a wide range of industrial machines, tools, and equipment for all your manufacturing needs."
+        />
+        <meta
+          name="keywords"
+          content={
+            "machinery, workshop equipment, industrial machines, tools, manufacturing equipment, heavy machinery, industrial tools" +
+            productInfo?.productTitle
+          }
+        />
+        <meta name="robots" content="index, follow" />
+        <meta name="kandokar" content="kandorkar.com" />
+      </Helmet>
       <div className="px-5 pb-5">
-        <h5
-          className="text-para_font_size font-semibold tracking-tight font-ruda text-primary_font_color"
-          style={{ fontWeight: "500" }}
-        >
-          {productInfo?.productTitle
-            ? productInfo?.productTitle
-            : "Title missing"}
-        </h5>
+        <div>
+          <h5
+            className="text-para_font_size font-semibold tracking-tight font-ruda text-primary_font_color"
+            style={{ fontWeight: "500" }}
+          >
+            {productInfo?.productTitle
+              ? productInfo?.productTitle
+              : "Title missing"}
+          </h5>
+
+          <Link to={"/productdetails/" + productInfo._id}>
+            <h6
+              className="text-xl w-full  cursor-pointer underline font-semibold tracking-tight font-ruda text-primary_font_color"
+              style={{ fontWeight: "500" }}
+            >
+              see More
+            </h6>
+          </Link>
+        </div>
 
         <div className="mb-5 mt-2.5 flex items-center">
           <div className="flex items-center space-x-1 rtl:space-x-reverse">

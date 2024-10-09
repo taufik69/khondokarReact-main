@@ -7,8 +7,6 @@ import {
   productDecrement,
   getTotal,
 } from "../lib/features/addToCart/addtoCart";
-import Header from "../components/HomeConponents/Header/Index";
-import Footer from "../components/HomeConponents/Footer/Index";
 import { Helmet } from "react-helmet";
 
 const CartPage = () => {
@@ -41,22 +39,7 @@ const CartPage = () => {
 
   return (
     <div>
-      <Header />
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>Cart</title>
-        <meta
-          name="description"
-          content="Top-quality machinery and workshop equipment. Explore a wide range of industrial machines, tools, and equipment for all your manufacturing needs."
-        />
-        <meta
-          name="keywords"
-          content="machinery, workshop equipment, industrial machines, tools, manufacturing equipment, heavy machinery, industrial tools"
-        />
-        <meta name="robots" content="index, follow" />
-        <meta name="kandokar" content="kandorkar.com" />
-      </Helmet>
-      <div className="bg-header_footer_background_color py-8 md:py-16">
+      <div className="bg-header_footer_background_color border-b py-8 md:py-16">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <h2
             className="text-xl text-primary_font_color text-[40px] font-sans_serif sm:text-2xl mt-20"
@@ -72,28 +55,34 @@ const CartPage = () => {
                   key={index}
                   className="rounded-lg border-[1px] border-gray-600 my-6 bg-gray-800 p-4 shadow-sm md:p-6"
                 >
+                  <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>Cart</title>
+                    <meta
+                      name="description"
+                      content={
+                        "Top-quality machinery and workshop equipment. Explore a wide range of industrial machines, tools, and equipment for all your manufacturing needs." +
+                        item.productTitle
+                      }
+                    />
+                    <meta
+                      name="keywords"
+                      content="machinery, workshop equipment, industrial machines, tools, manufacturing equipment, heavy machinery, industrial tools"
+                    />
+                    <meta name="robots" content="index, follow" />
+                    <meta name="kandokar" content="kandorkar.com" />
+                  </Helmet>
                   <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                    <Helmet>
-                      <meta charSet="utf-8" />
-                      <title>Cart</title>
-                      <meta
-                        name="description"
-                        content="Top-quality machinery and workshop equipment. Explore a wide range of industrial machines, tools, and equipment for all your manufacturing needs."
+                    <Link to="/" className="shrink-0 md:order-1">
+                      <img
+                        className="h-20 w-20"
+                        src={item.image}
+                        alt={item.productTitle}
+                        width={100}
+                        height={100}
                       />
-                      <meta name="keywords" content={item.productTitle} />
-                      <meta name="robots" content="index, follow" />
-                      <meta name="product" content={item.image} />
+                    </Link>
 
-                      <Link to="/" className="shrink-0 md:order-1">
-                        <img
-                          className="h-20 w-20"
-                          src={item.image}
-                          alt={item.productTitle}
-                          width={100}
-                          height={100}
-                        />
-                      </Link>
-                    </Helmet>
                     <div className="flex items-center justify-between md:order-3 md:justify-end">
                       <div className="flex items-center">
                         <button
@@ -154,22 +143,12 @@ const CartPage = () => {
                     </div>
 
                     <div className="w-full space-y-4 md:max-w-md">
-                      <Helmet>
-                        <meta
-                          name="keywords"
-                          content={
-                            "machinery, workshop equipment, industrial machines, tools, manufacturing equipment, heavy machinery, industrial tools" +
-                            item.productTitle
-                          }
-                        />
-                        <meta name="robots" content="index, follow" />
-                        <Link
-                          to="/"
-                          className="text-base font-medium text-white hover:underline"
-                        >
-                          {item ? item.productTitle : "Missing"}
-                        </Link>
-                      </Helmet>
+                      <Link
+                        to="/"
+                        className="text-base font-medium text-white hover:underline"
+                      >
+                        {item ? item.productTitle : "Missing"}
+                      </Link>
 
                       <div className="flex items-center gap-4">
                         <button className="text-sm text-gray-500 hover:underline">
@@ -254,7 +233,6 @@ const CartPage = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

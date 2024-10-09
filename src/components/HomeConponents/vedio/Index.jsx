@@ -26,7 +26,7 @@ const Vedio = () => {
     const { onClick } = props;
     return (
       <div
-        className="top-1/2 z-10 h-[40px] w-[40px] -translate-y-1/2 cursor-pointer rounded-full border-2 bg-primary_font_color shadow-xl sm:left-12 -md:left-30 lg:left-[1.4%] xl:left-[-30px]  2xl:left-[-80px]"
+        className="top-1/2 z-10 h-[40px] w-[40px] -translate-y-1/2 cursor-pointer rounded-full border-2 bg-primary_font_color shadow-xl sm:left-12 -md:left-30 lg:left-[1.4%] xl:left-[1%]  2xl:left-[-80px]"
         style={{
           display: "flex",
           justifyContent: "center",
@@ -48,7 +48,7 @@ const Vedio = () => {
     const { onClick } = props;
     return (
       <div
-        className="absolute top-1/2 z-10 h-[40px] w-[40px] -translate-y-1/2 cursor-pointer rounded-full border-2 bg-primary_font_color shadow-xl sm:right-12 -md:right-30 lg:right-[1%] xl:right-[-30px] 2xl:right-[-80px]"
+        className="absolute top-1/2 z-10 h-[40px] w-[40px] -translate-y-1/2 cursor-pointer rounded-full border-2 bg-primary_font_color shadow-xl sm:right-12 -md:right-30 lg:right-[1%] xl:right-[1%] 2xl:right-[-80px]"
         style={{
           display: "flex",
           justifyContent: "center",

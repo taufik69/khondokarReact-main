@@ -26,14 +26,14 @@ const Award = () => {
     const { onClick } = props;
     return (
       <div
-        className=" z-10 h-[40px] w-[40px]  cursor-pointer rounded-full border-2 bg-primary_font_color shadow-xl"
+        className=" z-10 h-[40px] w-[40px] mt-10   cursor-pointer rounded-full border-2 bg-primary_font_color shadow-xl"
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           position: "absolute",
           left: "83%",
-          bottom: "-11.5%",
+          bottom: "-15.7%",
         }}
         onClick={onClick}
       >
@@ -56,7 +56,7 @@ const Award = () => {
           alignItems: "center",
           position: "absolute",
           right: "1%",
-          bottom: "-16%",
+          bottom: "-21%",
         }}
         onClick={onClick}
       >

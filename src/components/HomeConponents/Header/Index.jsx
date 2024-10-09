@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../../../src/assets/react.svg";
 import { IoCartOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { getTotal } from "../../../lib/features/addToCart/addtoCart.js";
 import { Link } from "react-scroll";
+import "flowbite";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const pathName = location.pathname;
+  const regex = /\/productdetails\//;
+  const menuRef = useRef(null);
 
   useEffect(() => {
     dispatch(getTotal());
@@ -28,38 +31,57 @@ const Header = () => {
   ];
 
   const handleNavigateToCart = (item = {}) => {
-    if (pathName === "/cart") {
+    if (pathName === "/cart" || regex.test(pathName)) {
       navigate(`/`);
     }
+    setIsMenuOpen(false);
   };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Close the menu if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && menuRef.current.contains(event.target)) {
+        setIsMenuOpen(true);
+      } else {
+        setIsMenuOpen(false);
+      }
+    };
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   return (
     <div>
-      <nav className="fixed start-0 top-0 z-10 w-full drop-shadow-2xl bg-header_footer_background_color">
-        <div className="mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between p-4 md:flex-nowrap">
-          <Link
-            to="Home"
-            className="hidden items-center space-x-3 md:mr-5 md:block rtl:space-x-reverse cursor-pointer"
-          >
-            <img
-              src={logo}
-              alt="Logo"
-              loading="lazy"
-              className="mix-blend-color-dodge animate-spin "
-            />
-          </Link>
+      <nav className="fixed start-0 top-0 z-10 w-full  drop-shadow-2xl bg-header_footer_background_color">
+        <div className="mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between md:px-3 py-4 md:flex-nowrap">
+          <div className="md:hidden lg:block">
+            <Link
+              to="Home"
+              className="hidden items-center space-x-3 md:mr-5 md:block rtl:space-x-reverse cursor-pointer"
+            >
+              <img
+                src={logo}
+                alt="Logo"
+                loading="lazy"
+                className="mix-blend-color-dodge animate-spin "
+              />
+            </Link>
+          </div>
 
-          <div className="flex w-full justify-between md:order-2 md:w-fit md:space-x-0 rtl:space-x-reverse">
-            <div className="flex items-center justify-center">
-              <div className="relative flex w-full max-w-md items-center">
+          <div className="flex w-full justify-between md:order-2 md:w-fit md:justify-between md:space-x-0 rtl:space-x-reverse">
+            {/* search bar and button */}
+            <div className="flex items-center justify-between">
+              <div className="relative flex w-full lg:w-[80%] 2xl:w-full  max-w-md items-center ">
                 <input
                   type="text"
                   placeholder="Search Here..."
-                  className={`text-sm ml-6 w-full rounded-full py-2 pl-4 pr-16 text-gray-900 focus:outline-none focus:ring-2 ${
+                  className={`text-sm ml-6 w-full rounded-full py-2 pl-4 pr-16 md:pr-4 text-gray-900 focus:outline-none focus:ring-2 ${
                     cart?.totoalCartItem ? "bg-white" : ""
                   }`}
                 />
-                <button className="absolute right-0 top-0 h-full rounded-full border-[3px] border-primary_font_color bg-orange-500 px-6 text-white hover:bg-orange-600 focus:outline-none">
+                <button className="absolute right-0 top-0 h-full rounded-full md:hidden lg:block border-[3px] border-primary_font_color bg-orange-500 px-6 text-white hover:bg-orange-600 focus:outline-none">
                   Search
                 </button>
               </div>
@@ -70,23 +92,23 @@ const Header = () => {
               className="block md:hidden pl-4 relative mt-2 cursor-pointer"
               onClick={() => navigate("/cart")}
             >
-              <Link to="/cart">
-                <span className="relative">
-                  <IoCartOutline className="w-[30px] h-[30px] text-stone-100" />
-                  <span className="absolute top-[-19%] right-[-102%] flex h-10 w-10 z-50 animate-pulse">
-                    <span className="relative flex justify-center items-center bg-orange_color text-white tex-3xl rounded-full h-7 w-7 border border-gray-100">
-                      {cart?.totoalCartItem}
-                    </span>
+              <span className="relative">
+                <IoCartOutline className="w-[30px] h-[30px] text-stone-100" />
+                <span className="absolute top-[-19%] right-[-102%] flex h-10 w-10 z-50 animate-pulse">
+                  <span className="relative flex justify-center items-center bg-orange_color text-white tex-3xl rounded-full h-7 w-7 border border-gray-100">
+                    {cart?.totoalCartItem}
                   </span>
                 </span>
-              </Link>
+              </span>
             </div>
-
+            {/* Cart button */}
             {/* Collapse button */}
             <button
+              ref={menuRef}
+              data-collapse-toggle="navbar-taufik"
               type="button"
               className="text-sm inline-flex h-10 w-10 ml-5 items-center justify-center rounded-lg p-2 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden"
-              aria-controls="navbar-sticky"
+              aria-controls="navbar-taufik"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
@@ -109,7 +131,7 @@ const Header = () => {
 
             {/* Sign Up / Sign In Buttons */}
             {!cart?.totoalCartItem && (
-              <div className="hidden sm:hidden xl:block">
+              <div className="hidden lg:block w-1/2 ">
                 <div className="flex space-x-3">
                   <button
                     className="signUp rounded-full border-2 border-primary_font_color px-6 py-2 text-white focus:outline-none focus:ring-1 sm:ml-3 "
@@ -127,14 +149,20 @@ const Header = () => {
                 </div>
               </div>
             )}
+            {/* Sign Up / Sign In Buttons */}
           </div>
 
           {/* Navigation Menu */}
+
           <div
-            className="hidden w-full flex-wrap items-center justify-between md:order-1 md:flex md:w-auto"
-            id="navbar-sticky"
+            id={"navbar-taufik"}
+            className={
+              isMenuOpen
+                ? "hidden w-full"
+                : "hidden w-full flex-wrap items-center justify-between md:order-1 md:flex md:w-auto"
+            }
           >
-            <ul className="mt-4 flex flex-col  h-[90vh] md:h-11 items-center rounded-lg border p-4 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:p-0 rtl:space-x-reverse">
+            <ul className="mt-4 flex flex-col overflow-y-scroll lg:overflow-y-clip h-[90vh] md:h-11 items-center rounded-lg border p-4 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:p-0 rtl:space-x-reverse">
               {menuItem.map((item) => (
                 <li
                   className="font-bold cursor-pointer menu font-sans_serif text-para_font_size text-primary_font_color transition-all w-full"
@@ -170,8 +198,31 @@ const Header = () => {
                   </span>
                 </div>
               )}
+              {/* Sign Up / Sign In Buttons for medium device to large */}
+              {cart?.totoalCartItem == 0 && (
+                <div className="block md:hidden pb-8">
+                  <div className="flex  space-x-3">
+                    <button
+                      className="signUp  rounded-full border-2 border-primary_font_color px-4  sm:px-16 py-2 text-white focus:outline-none focus:ring-1 sm:ml-3 "
+                      onClick={() => navigate("/signup")}
+                    >
+                      Sign Up
+                    </button>
+
+                    <button
+                      className="signUp rounded-full border-2 border-orange-500 px-4  sm:px-16 py-2 text-primary_font_color focus:outline-none focus:ring-0"
+                      onClick={() => navigate("/signin")}
+                    >
+                      Sign in
+                    </button>
+                  </div>
+                </div>
+              )}
+              {/* Sign Up / Sign In Buttons */}
             </ul>
           </div>
+
+          {/* Navigation Menu */}
         </div>
       </nav>
     </div>

@@ -39,7 +39,7 @@ const AwardContent = ({ title, awardInfo = {} }) => {
         )}
 
         {title && (
-          <div className="absolute left-[0%] bottom-0 sm:top-[67%] rounded-br-none bg-primary_font_color py-5 px-5 rounded-lg">
+          <div className="absolute left-[0%] bottom-0 sm:top-[67%] rounded-br-none bg-primary_font_color py-5 pl-10 pr-28 lg:pr-5 lg:pl-5 md:pl-10 md:w-1/2 md:pr-2 lg:px-5 rounded-lg">
             <h3
               className=" text-[24px] sm:text-heading_font_size text-header_footer_background_color capitalize"
               style={{ fontWeight: 500, fontFamily: "serif" }}

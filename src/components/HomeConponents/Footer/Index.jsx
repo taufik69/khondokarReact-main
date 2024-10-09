@@ -16,7 +16,7 @@ const Footer = () => {
             <h1 className="text-[50px]" style={{ fontWeight: "bold" }}>
               LOGO
             </h1>
-            <p className="mt-4 text-xl text-justify pr-8 font-sans_serif text-primary_font_color">
+            <p className="mt-4 text-xl  text-center lg:text-justify pr-8 font-sans_serif text-primary_font_color">
               Find out more about smart factories, their market prospects, and
               key smart factory hardware.
             </p>
@@ -30,7 +30,7 @@ const Footer = () => {
 
           <div className="flex items-center md:w-full m-0 lg:ml-7  sm:flex-row flex-col gap-y-8  xl:flex-wrap justify-between gap-x-10 xl:gap-x-20 xl:ml-20">
             {/* Links Section */}
-            <div className="text-start">
+            <div className="text-center md:text-start sm:mr-0">
               <h2
                 className="text-[30px] font-sans_serif mb-4"
                 style={{ fontWeight: "500" }}
@@ -82,7 +82,7 @@ const Footer = () => {
             </div>
 
             {/* Address and Map */}
-            <div className="text-start mr-16 sm:mr-0">
+            <div className="text-center md:text-start sm:mr-0">
               <h2
                 className="text-[30px] font-sans_serif mb-4"
                 style={{ fontWeight: "500" }}
@@ -112,7 +112,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="rounded-xl grow">
+            <div className="rounded-xl grow ">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29248.67788700944!2d89.82061152485468!3d23.601293817446454!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fe2534aaa4fc7f%3A0x4daf43ffdb19a28e!2sFaridpur!5e0!3m2!1sen!2sbd!4v1727203687719!5m2!1sen!2sbd"
                 width="100%"
