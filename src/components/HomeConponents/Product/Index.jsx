@@ -7,7 +7,6 @@ import ProductContent from "./ProductContent.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { addtoCart } from "../../../lib/features/addToCart/addtoCart.js";
 import { axiosInstance } from "../../axios/axios.instance.js";
-import { Link } from "react-router-dom";
 
 const Products = () => {
   // Data Fetching from server

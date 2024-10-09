@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // React Router navigation
 import { Link } from "react-router-dom"; // React Router Link
 import { toast, ToastContainer, Bounce } from "react-toastify";
-import axios from "axios"; // Axios for HTTP requests
 import { FaRegEye, FaEyeSlash } from "react-icons/fa";
 import { FallingLines } from "react-loader-spinner";
+import { axiosInstance } from "../components/axios/axios.instance";
 
 const SignUP = () => {
   const navigate = useNavigate();
@@ -36,9 +36,7 @@ const SignUP = () => {
   const handleRegistration = async () => {
     try {
       setLoading(true);
-
       const { firstName, email, mobile, password } = signUpInfo;
-
       if (!firstName) {
         setFirstNameErr("FirstName Missing !!");
       } else if (!email) {
@@ -55,7 +53,8 @@ const SignUP = () => {
         setFirstNameErr("");
       } else {
         setPasswordErr("");
-        const { data } = await axios.post("/signup", signUpInfo);
+        const { data } = await axiosInstance.post("/signup", signUpInfo);
+        console.log("data", data);
 
         if (data?.success) {
           toast.success(data?.message, {
@@ -87,14 +86,18 @@ const SignUP = () => {
         transition: Bounce,
       });
     } finally {
+      setPasswordErr("");
+      setMobileErr("");
+      setEmailErr("");
+      setFirstNameErr("");
       setLoading(false);
-      setSignUpInfo({
-        firstName: "",
-        email: "",
-        mobile: "",
-        address: "",
-        password: "",
-      });
+      // setSignUpInfo({
+      //   firstName: "",
+      //   email: "",
+      //   mobile: "",
+      //   address: "",
+      //   password: "",
+      // });
     }
   };
 

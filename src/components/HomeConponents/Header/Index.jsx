@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../../../src/assets/react.svg";
 import { IoCartOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,6 +8,8 @@ import { Link } from "react-scroll";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const pathName = location.pathname;
 
   useEffect(() => {
     dispatch(getTotal());
@@ -24,6 +26,12 @@ const Header = () => {
     { id: 6, title: "whatWeDo", path: "/whatwedo" },
     { id: 7, title: "Contact", path: "/contact" },
   ];
+
+  const handleNavigateToCart = (item = {}) => {
+    if (pathName === "/cart") {
+      navigate(`/`);
+    }
+  };
 
   return (
     <div>
@@ -133,14 +141,16 @@ const Header = () => {
                   key={item.id}
                   style={{ fontWeight: "400" }}
                 >
-                  <Link
-                    to={`${item.title}`}
-                    smooth={true}
-                    duration={400}
-                    className="my-2 block rounded bg-transparent border md:border-0 border-gray-200 px-3 py-2 text-center text-white md:bg-transparent md:p-0"
-                  >
-                    {item.title}
-                  </Link>
+                  <span onClickCapture={() => handleNavigateToCart(item)}>
+                    <Link
+                      to={`${item.title}`}
+                      smooth={true}
+                      duration={400}
+                      className="my-2 block rounded bg-transparent border md:border-0 border-gray-200 px-3 py-2 text-center text-white md:bg-transparent md:p-0"
+                    >
+                      {item.title}
+                    </Link>
+                  </span>
                 </li>
               ))}
 
