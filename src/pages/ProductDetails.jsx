@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { axiosInstance } from "../components/axios/axios.instance";
 import { useLocation } from "react-router-dom";
 import ScroolTop from "../components/commonCoponents/ScroolTop";
+import { Helmet } from "react-helmet";
 
 const ProductComponent = () => {
   const [allProduct, setallProduct] = useState([]);
@@ -15,7 +16,7 @@ const ProductComponent = () => {
         const { data } = await axiosInstance.get(`/product/${productId}`);
         setallProduct(data?.data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
@@ -25,6 +26,27 @@ const ProductComponent = () => {
   return (
     <>
       <div className="min-w-screen min-h-screen productpart flex items-center pt-[20%] md:pt-0 p-5 lg:p-10 overflow-hidden ">
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Product Details</title>
+
+          <meta
+            name="description"
+            content={
+              "Top-quality machinery and workshop equipment. Explore a wide range of industria l machines, tools, and equipment for all your manufacturing needs." +
+              allProduct?.productSummay
+            }
+          />
+          <meta
+            name="keywords"
+            content={
+              "machinery, workshop equipment, industrial machines, tools, manufacturing equipment, heavy machinery, industrial tools" +
+              allProduct?.productTitle
+            }
+          />
+          <meta name="robots" content="index, follow" />
+          <meta name="kandokar" content="kandorkar.com" />
+        </Helmet>
         <div className="w-full max-w-6xl rounded-2xl opacity-85  bg-header_footer_background_color text-white shadow-xl p-10 lg:p-20 mx-auto  relative md:text-left">
           <div className="md:flex items-center -mx-10">
             <div className="w-full md:w-1/2 px-3 md:px-10 mb-10 md:mb-0">
