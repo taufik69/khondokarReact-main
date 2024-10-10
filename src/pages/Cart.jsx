@@ -42,9 +42,9 @@ const CartPage = () => {
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <h2
             className="text-xl text-primary_font_color text-[40px] font-sans_serif sm:text-2xl mt-20"
-            style={{ fontWeight: "500" }}
+            style={{ fontWeight: "600" }}
           >
-            Shopping Cart {cart?.CartTtem?.length}
+            Shopping Cart{" "}
           </h2>
 
           <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
@@ -201,7 +201,7 @@ const CartPage = () => {
                 </div>
 
                 <Link
-                  to="/checkout"
+                  to="/signup"
                   className="block w-full text-center bg-orange-500 text-white py-2.5 rounded-lg hover:bg-orange-600"
                 >
                   Proceed to Checkout

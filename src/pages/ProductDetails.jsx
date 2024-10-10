@@ -3,15 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../components/axios/axios.instance";
 import { useLocation } from "react-router-dom";
 import { addtoCart, addToCartSlice } from "../lib/features/addToCart/addtoCart";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 
 const ProductComponent = () => {
   const [allProduct, setallProduct] = useState([]);
+  const [alreadyaddincart, setalreadyaddincart] = useState(false);
   const pathName = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const productId = pathName?.pathname?.split("/")[2];
+  const { cart } = useSelector((state) => state);
 
   useEffect(() => {
     const ProductFetcher = async () => {
@@ -24,6 +26,16 @@ const ProductComponent = () => {
     };
 
     ProductFetcher();
+
+    const isAlreadyExistInCart = cart?.CartTtem.filter(
+      (item) => item._id === productId
+    );
+
+    if (isAlreadyExistInCart?.length) {
+      setalreadyaddincart(true);
+    } else {
+      setalreadyaddincart(false);
+    }
   }, []);
 
   // handleAddtoCart function implement
@@ -120,14 +132,24 @@ const ProductComponent = () => {
                     {allProduct?.productPrice || 5000}
                   </span>
                 </div>
-                <div
-                  className="inline-block align-bottom"
-                  onClick={() => handleAddtoCart(allProduct)}
-                >
-                  <button className="bg-orange_color  text-white shadow-2xl cursor-pointer font-sans_serif rounded-full px-10 py-2 font-semibold">
-                    Add to Cart
-                  </button>
-                </div>
+                {alreadyaddincart ? (
+                  <Link to={"/cart"}>
+                    <div className="inline-block align-bottom">
+                      <button className="bg-orange_color  text-white shadow-2xl cursor-pointer font-sans_serif rounded-full px-10 py-2 font-semibold">
+                        Already in Cart
+                      </button>
+                    </div>
+                  </Link>
+                ) : (
+                  <div
+                    className="inline-block align-bottom"
+                    onClick={() => handleAddtoCart(allProduct)}
+                  >
+                    <button className="bg-orange_color  text-white shadow-2xl cursor-pointer font-sans_serif rounded-full px-10 py-2 font-semibold">
+                      Add to Cart
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
