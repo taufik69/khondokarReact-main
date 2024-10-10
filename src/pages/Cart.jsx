@@ -13,7 +13,6 @@ const CartPage = () => {
   const dispatch = useDispatch();
   const [realtime, setRealtime] = useState(false);
   const { cart } = useSelector((state) => state);
-  console.log(cart);
 
   useEffect(() => {
     dispatch(getTotal());
@@ -50,121 +49,132 @@ const CartPage = () => {
 
           <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
             <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
-              {cart?.CartTtem?.map((item, index) => (
-                <div
-                  key={index}
-                  className="rounded-lg border-[1px] border-gray-600 my-6 bg-gray-800 p-4 shadow-sm md:p-6"
-                >
-                  <Helmet>
-                    <meta charSet="utf-8" />
-                    <title>Cart</title>
-                    <meta
-                      name="description"
-                      content={
-                        "Top-quality machinery and workshop equipment. Explore a wide range of industrial machines, tools, and equipment for all your manufacturing needs." +
-                        item.productTitle
-                      }
-                    />
-                    <meta
-                      name="keywords"
-                      content="machinery, workshop equipment, industrial machines, tools, manufacturing equipment, heavy machinery, industrial tools"
-                    />
-                    <meta name="robots" content="index, follow" />
-                    <meta name="kandokar" content="kandorkar.com" />
-                  </Helmet>
-                  <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                    <Link to="/" className="shrink-0 md:order-1">
-                      <img
-                        className="h-20 w-20"
-                        src={item.image}
-                        alt={item.productTitle}
-                        width={100}
-                        height={100}
+              {cart?.CartTtem?.length > 0 ? (
+                cart?.CartTtem?.map((item, index) => (
+                  <div
+                    key={index}
+                    className="rounded-lg border-[1px] border-gray-600 my-6 bg-gray-800 p-4 shadow-sm md:p-6"
+                  >
+                    <Helmet>
+                      <meta charSet="utf-8" />
+                      <title>Cart</title>
+                      <meta
+                        name="description"
+                        content={
+                          "Top-quality machinery and workshop equipment. Explore a wide range of industrial machines, tools, and equipment for all your manufacturing needs." +
+                          item.productTitle
+                        }
                       />
-                    </Link>
-
-                    <div className="flex items-center justify-between md:order-3 md:justify-end">
-                      <div className="flex items-center">
-                        <button
-                          type="button"
-                          onClick={() => handleDecrement(item)}
-                          className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-gray-600 bg-gray-700 hover:bg-gray-800"
-                        >
-                          <svg
-                            className="h-2.5 w-2.5 text-white"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 18 2"
-                          >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M1 1h16"
-                            />
-                          </svg>
-                        </button>
-                        <input
-                          type="text"
-                          className="w-10 text-center text-sm text-white bg-transparent"
-                          value={item.cartQuantity}
-                          readOnly
+                      <meta
+                        name="keywords"
+                        content="machinery, workshop equipment, industrial machines, tools, manufacturing equipment, heavy machinery, industrial tools"
+                      />
+                      <meta name="robots" content="index, follow" />
+                      <meta name="kandokar" content="kandorkar.com" />
+                    </Helmet>
+                    <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
+                      <Link to="/" className="shrink-0 md:order-1">
+                        <img
+                          className="h-20 w-20"
+                          src={item.image}
+                          alt={item.productTitle}
+                          width={100}
+                          height={100}
                         />
-                        <button
-                          type="button"
-                          onClick={() => handleIncrement(item)}
-                          className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-gray-600 bg-gray-700 hover:bg-gray-800"
-                        >
-                          <svg
-                            className="h-2.5 w-2.5 text-white"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 18 18"
-                          >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M9 1v16M1 9h16"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                      <div className="text-end md:w-32">
-                        <p className="text-base font-bold text-white">
-                          <span className="text-[25px]">&#2547;</span>{" "}
-                          {item.productPrice
-                            ? item.productPrice * item.cartQuantity
-                            : "Missing"}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="w-full space-y-4 md:max-w-md">
-                      <Link
-                        to="/"
-                        className="text-base font-medium text-white hover:underline"
-                      >
-                        {item ? item.productTitle : "Missing"}
                       </Link>
 
-                      <div className="flex items-center gap-4">
-                        <button className="text-sm text-gray-500 hover:underline">
-                          Add to Favorites
-                        </button>
-                        <button
-                          className="text-sm text-red-600 hover:underline"
-                          onClick={() => handleRemove(item)}
+                      <div className="flex items-center justify-between md:order-3 md:justify-end">
+                        <div className="flex items-center">
+                          <button
+                            type="button"
+                            onClick={() => handleDecrement(item)}
+                            className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-gray-600 bg-gray-700 hover:bg-gray-800"
+                          >
+                            <svg
+                              className="h-2.5 w-2.5 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 18 2"
+                            >
+                              <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M1 1h16"
+                              />
+                            </svg>
+                          </button>
+                          <input
+                            type="text"
+                            className="w-10 text-center text-sm text-white bg-transparent"
+                            value={item.cartQuantity}
+                            readOnly
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleIncrement(item)}
+                            className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-gray-600 bg-gray-700 hover:bg-gray-800"
+                          >
+                            <svg
+                              className="h-2.5 w-2.5 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 18 18"
+                            >
+                              <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M9 1v16M1 9h16"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                        <div className="text-end md:w-32">
+                          <p className="text-base font-bold text-white">
+                            <span className="text-[25px]">&#2547;</span>{" "}
+                            {item.productPrice
+                              ? item.productPrice * item.cartQuantity
+                              : "Missing"}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="w-full space-y-4 md:max-w-md">
+                        <Link
+                          to="/"
+                          className="text-base font-medium text-white hover:underline"
                         >
-                          Remove
-                        </button>
+                          {item ? item.productTitle : "Missing"}
+                        </Link>
+
+                        <div className="flex items-center gap-4">
+                          <button className="text-sm text-gray-500 hover:underline">
+                            Add to Favorites
+                          </button>
+                          <button
+                            className="text-sm text-red-600 hover:underline"
+                            onClick={() => handleRemove(item)}
+                          >
+                            Remove
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
+                ))
+              ) : (
+                <div className="flex items-center justify-center h-[60dvh] animate-pulse ">
+                  <Link
+                    to="/"
+                    className=" px-10  text-center bg-orange-500 text-white py-2.5 rounded-lg hover:bg-orange-600"
+                  >
+                    Go To Product
+                  </Link>
                 </div>
-              ))}
+              )}
             </div>
 
             {/* Order Summary */}

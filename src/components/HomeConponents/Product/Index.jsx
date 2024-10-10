@@ -7,24 +7,24 @@ import ProductContent from "./ProductContent.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { addtoCart } from "../../../lib/features/addToCart/addtoCart.js";
 import { axiosInstance } from "../../axios/axios.instance.js";
+import { allProducts } from "../../../lib/features/allproduct/allproductslice.js";
 
 const Products = () => {
+  const dispatch = useDispatch();
+  const [allProduct, setallProduct] = useState([]);
   // Data Fetching from server
   useEffect(() => {
     const ProductFetcher = async () => {
       try {
         const { data } = await axiosInstance.get("/product");
         setallProduct(data);
+        dispatch(allProducts(data?.data));
       } catch (error) {
         console.log(error);
       }
     };
-
     ProductFetcher();
   }, []);
-
-  const dispatch = useDispatch();
-  const [allProduct, setallProduct] = useState([]);
 
   function SamplePrevArrow2(props) {
     const { onClick } = props;
