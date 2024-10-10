@@ -66,7 +66,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="signinZigzag min-h-screen flex items-center justify-center px-6 py-8">
+    <div className="signinZigzag min-h-screen flex items-center justify-center px-6 py-8 ">
       <ToastContainer className={"w-fit "} />
       <div className="flex flex-col items-center w-full max-w-md bg-header_footer_background_color">
         <div className="w-full bg-white rounded-lg shadow p-6 ">
