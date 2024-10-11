@@ -4,7 +4,7 @@ import { Link } from "react-scroll";
 const BannerContent = ({ bannerContent = {} }) => {
   return (
     <>
-      <div className="relative h-[100vh]  w-full">
+      <div className="relative h-[70vh]  w-full">
         <img
           src={bannerContent?.image ? bannerContent?.image : ""}
           loading="lazy"
