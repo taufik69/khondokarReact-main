@@ -135,7 +135,7 @@ const ProductComponent = () => {
                 {alreadyaddincart ? (
                   <Link to={"/cart"}>
                     <div className="inline-block align-bottom">
-                      <button className="bg-orange_color  text-white shadow-2xl cursor-pointer font-sans_serif rounded-full px-10 py-2 font-semibold">
+                      <button className="bg-green-500  text-white shadow-2xl cursor-pointer font-sans_serif rounded-full px-10 py-2 font-semibold">
                         Already in Cart
                       </button>
                     </div>

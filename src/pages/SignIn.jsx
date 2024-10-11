@@ -180,9 +180,11 @@ const SignIn = () => {
                       Sign up
                     </Link>{" "}
                   </div>
-                  <span className="text-white underline cursor-pointer hover:text-orange_color">
-                    Forgot Password
-                  </span>
+                  <Link to={"/resetPassword"}>
+                    <span className="text-white underline cursor-pointer hover:text-orange_color">
+                      Forgot Password
+                    </span>
+                  </Link>
                 </p>
               </div>
 

@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import { FaEyeSlash, FaRegEye } from "react-icons/fa";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer, Bounce } from "react-toastify";
+import { axiosInstance } from "../components/axios/axios.instance";
 
 const ResetPassword = () => {
   const [eye, setEye] = useState(false);
+  const [loading, setloading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     oldPassword: "",
-    password: "",
-    confirmPassword: "",
+    newPassword: "",
+    confrimpassword: "",
   });
 
   const [formErrors, setFormErrors] = useState({
     email: "",
     oldPassword: "",
-    password: "",
-    confirmPassword: "",
+    newPassword: "",
+    confrimpassword: "",
   });
 
   const handleChange = (e) => {
@@ -40,28 +42,52 @@ const ResetPassword = () => {
     }
 
     if (!formData.oldPassword.trim()) {
-      errors.oldPassword = "Old Password is required.";
+      errors.oldPassword = "Old newPassword is required.";
     }
 
-    if (!formData.password.trim()) {
-      errors.password = "New Password is required.";
-    } else if (formData.password.length < 6) {
-      errors.password = "New Password must be at least 6 characters.";
+    if (!formData.newPassword.trim()) {
+      errors.newPassword = "New newPassword is required.";
+    } else if (formData.newPassword.length < 6) {
+      errors.newPassword = "New newPassword must be at least 6 characters.";
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      errors.confirmPassword = "Passwords do not match.";
+    if (formData.newPassword !== formData.confrimpassword) {
+      errors.confrimpassword = "newPasswords do not match.";
     }
 
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setloading(true);
+    try {
+      if (validateForm()) {
+        const { data } = await axiosInstance.patch("/reset-password", formData);
 
-    if (validateForm()) {
-      console.log("Form Submitted", formData);
+        toast.success(`${data?.data?.firstName} ${data?.message}`, {
+          position: "top-left",
+          autoClose: 8000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setloading(false);
+      setFormData({
+        email: "",
+        oldPassword: "",
+        newPassword: "",
+        confrimpassword: "",
+      });
     }
   };
 
@@ -74,7 +100,7 @@ const ResetPassword = () => {
             className="text-[30px]  my-7 text-gray-900 text-center"
             style={{ fontWeight: "500" }}
           >
-            Change Password
+            Change newPassword
           </h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
@@ -103,10 +129,10 @@ const ResetPassword = () => {
                 htmlFor="oldPassword"
                 className="block mb-2 text-sm font-ruda font-medium text-gray-900"
               >
-                Old Password <span className="text-orange_color">*</span>
+                Old newPassword <span className="text-orange_color">*</span>
               </label>
               <input
-                type={eye ? "text" : "password"}
+                type={eye ? "text" : "newPassword"}
                 id="oldPassword"
                 value={formData.oldPassword}
                 onChange={handleChange}
@@ -129,62 +155,67 @@ const ResetPassword = () => {
             </div>
             <div className="relative">
               <label
-                htmlFor="password"
+                htmlFor="newPassword"
                 className="block mb-2 text-sm font-medium font-ruda text-gray-900"
               >
-                New Password <span className="text-orange_color">*</span>
+                New newPassword <span className="text-orange_color">*</span>
               </label>
               <input
-                type={eye ? "text" : "password"}
-                id="password"
-                value={formData.password}
+                type={eye ? "text" : "newPassword"}
+                id="newPassword"
+                value={formData.newPassword}
                 onChange={handleChange}
                 placeholder="••••••••"
                 className={`bg-gray-50 border ${
-                  formErrors.password ? "border-red-500" : "border-gray-300"
+                  formErrors.newPassword ? "border-red-500" : "border-gray-300"
                 } text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5`}
               />
 
-              {formErrors.password && (
+              {formErrors.newPassword && (
                 <p className="text-red-500 text-xs mt-1">
-                  {formErrors.password}
+                  {formErrors.newPassword}
                 </p>
               )}
             </div>
             <div className="">
               <label
-                htmlFor="confirmPassword"
+                htmlFor="confrimpassword"
                 className="block mb-2 text-sm font-medium text-gray-900"
               >
-                Confirm Password <span className="text-orange_color">*</span>
+                Confirm newPassword <span className="text-orange_color">*</span>
               </label>
 
               <input
-                type={eye ? "text" : "password"}
-                id="confirmPassword"
-                value={formData.confirmPassword}
+                type={eye ? "text" : "newPassword"}
+                id="confrimpassword"
+                value={formData.confrimpassword}
                 onChange={handleChange}
                 placeholder="••••••••"
                 className={`bg-gray-50 border ${
-                  formErrors.confirmPassword
+                  formErrors.confrimpassword
                     ? "border-red-500"
                     : "border-gray-300"
                 } text-gray-900 rounded-lg focus:ring-primary-600 mb-5  focus:border-primary-600 block w-full p-2.5`}
               />
 
-              {formErrors.confirmPassword && (
+              {formErrors.confrimpassword && (
                 <p className="text-red-500 text-xs mt-1 mb-2 ">
-                  {formErrors.confirmPassword}
+                  {formErrors.confrimpassword}
                 </p>
               )}
             </div>
-
-            <button
-              type="submit"
-              className="w-full  bg-orange-600 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >
-              Reset Password
-            </button>
+            {loading ? (
+              <button className="w-full  bg-orange-600 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                loading..
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="w-full  bg-orange-600 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              >
+                Reset Password
+              </button>
+            )}
           </form>
         </div>
       </div>
